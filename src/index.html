@@ -12,8 +12,14 @@
 
 <body>
     <script>
+        performance.mark('start');
+    </script>
+    <script>
         require('./imports')
         require('./router')
+    </script>
+    <script>
+        performance.mark('end');
     </script>
 </body>
 

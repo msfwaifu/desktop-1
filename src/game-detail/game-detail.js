@@ -56,8 +56,8 @@ const getGameDirectory = function (dataPath, gameSlug) {
 };
 
 // Render passed game slug and data
-// renderGameDetail :: String, Object -> ()
-const renderGameDetail = function (gameSlug, gameData) {
+// render :: String, Object -> ()
+const render = function (gameData) {
     const pluginList = document.querySelector('[data-plugin-list]');
     const gameName = document.querySelector('[data-game-detail-name]');
     const gameBackground = document.querySelector('[data-game-detail-background]');
@@ -77,11 +77,13 @@ const renderGameDetail = function (gameSlug, gameData) {
 
     // Get plugins from the game directory and in the nested 'disabled' directory
     Promise.all([
-        getGamePlugins(path.join(getGameDirectory(dataPath, gameSlug)), true),
-        getGamePlugins(path.join(getGameDirectory(dataPath, gameSlug), 'disabled'), false)
+        getGamePlugins(path.join(getGameDirectory(dataPath, gameData.appSlug)), true),
+        getGamePlugins(path.join(getGameDirectory(dataPath, gameData.appSlug), 'disabled'), false)
     ])
         .then(R.flatten)
         .then(R.map(renderPlugin));
 };
 
-module.exports = renderGameDetail;
+module.exports = {
+    render
+};
